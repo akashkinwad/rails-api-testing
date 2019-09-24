@@ -10,30 +10,34 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170306191048) do
+ActiveRecord::Schema.define(version: 2017_03_06_191048) do
 
-  create_table "items", force: :cascade do |t|
-    t.string   "name"
-    t.boolean  "done"
-    t.integer  "todo_id"
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
+  create_table "items", id: :serial, force: :cascade do |t|
+    t.string "name"
+    t.boolean "done"
+    t.integer "todo_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["todo_id"], name: "index_items_on_todo_id"
   end
 
-  create_table "todos", force: :cascade do |t|
-    t.string   "title"
-    t.string   "created_by"
+  create_table "todos", id: :serial, force: :cascade do |t|
+    t.string "title"
+    t.string "created_by"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "users", force: :cascade do |t|
-    t.string   "name"
-    t.string   "email"
-    t.string   "password_digest"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+  create_table "users", id: :serial, force: :cascade do |t|
+    t.string "name"
+    t.string "email"
+    t.string "password_digest"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "items", "todos"
 end

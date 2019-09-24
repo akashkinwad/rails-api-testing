@@ -1,7 +1,10 @@
 Rails.application.routes.draw do
+  mount Rswag::Ui::Engine => '/api-docs'
+  mount Rswag::Api::Engine => '/api-docs'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
   # module the controllers without affecting the URI
+
   scope module: :v2, constraints: ApiVersion.new('v2') do
     resources :todos, only: :index
   end
@@ -11,7 +14,6 @@ Rails.application.routes.draw do
       resources :items
     end
   end
-
 
   post 'auth/login', to: 'authentication#authenticate'
   post 'signup', to: 'users#create'

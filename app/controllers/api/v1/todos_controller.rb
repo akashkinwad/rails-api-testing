@@ -1,21 +1,18 @@
-module V1
+module Api::V1
   class TodosController < ApplicationController
   before_action :set_todo, only: [:show, :update, :destroy]
 
   # GET /todos
   def index
     # get current user todos
-    @todos = current_user.todos.paginate(page: params[:page], per_page: 20)
+    # @todos = current_user.todos.paginate(page: params[:page], per_page: 20)
+    @todos = Todo.all.paginate(page: params[:page], per_page: 20)
     json_response(@todos)
   end
 
   # GET /todos/:id
   def show
-    if @todo.user == current_user
-      json_response(@todo)
-    else
-      raise(ExceptionHandler::AuthorizationException, Message.authorization_error)
-    end
+    json_response(@todo)
   end
 
   # POST /todos

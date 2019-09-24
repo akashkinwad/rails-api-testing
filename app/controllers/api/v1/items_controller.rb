@@ -1,7 +1,6 @@
-module V1
+module Api::V1
   class ItemsController < ApplicationController
     before_action :set_todo
-    before_action :check_authorization
     before_action :set_todo_item, only: [:show, :update, :destroy]
 
     # GET /todos/:todo_id/items
@@ -44,12 +43,6 @@ module V1
 
     def set_todo_item
       @item = @todo.items.find_by!(id: params[:id]) if @todo
-    end
-
-    def check_authorization
-      unless @todo.user == current_user
-        raise(ExceptionHandler::AuthorizationException, Message.authorization_error)
-      end
     end
   end
 end
