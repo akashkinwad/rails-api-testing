@@ -6,7 +6,7 @@ module V1
 
     # GET /todos/:todo_id/items
     def index
-      json_response(@todo.items)
+      json_with_pagination_response(@todo.items)
     end
 
     # GET /todos/:todo_id/items/:id
