@@ -9,6 +9,7 @@ Rails.application.routes.draw do
     resources :todos do
       resources :items
     end
+    resources :users, only: :index
   end
 
   post 'auth/login', to: 'authentication#authenticate'
